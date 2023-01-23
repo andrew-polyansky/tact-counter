@@ -291,14 +291,14 @@ function dictValueParserAdd(): DictionaryValue<Add> {
         }
     }
 }
-async function SampleTactContract_init(owner: Address) {
-    const __init = 'te6ccgEBBwEANAABFP8A9KQT9LzyyAsBAgFiAgMCAs0EBQAJoUrd4AkAAdQBEdOAFkZgFtnmTAYAClnPFssf';
-    const __code = 'te6ccgECIwEAAlYAART/APSkE/S88sgLAQIBYgIDAgLLBAUCAWofIAIBIAYHAgFIEBECAdQICQAV/KP4DlAHA4AOUAQElTt+3Ah10nCH5UwINcLH94C0NMDAXGwwAGRf5Fw4gH6QCJQZm8E+GECkVvgIIIQh9Q6wrqPjDDbPALbPDES8BTbPOAgghCUapi2uoCEKDgsACwgbvLQgIAAg0x8BghCH1DrCuvLggdMfAQQij4ww2zwC2zwxEvAW2zzgwAAhDA4NACDTHwGCEJRqmLa68uCB0z8BAnCPMPkBgvDE+NcjEu3971t77HgzvbsWLRURvXipEq7Q8mN69lVyrrqPCNs88BXbPNsx4JEw4vLAgiEOARbI+EIBzFnbPMntVA8AClnPFssfAgEgEhMCASAZGgIBIBQVAgEgFxgB9zIcQHKAVAH8A9wAcoCUAXPFlAD+gJwAcpoI26zJW6zsY49f/APyHDwD3DwDyRus5l/8A8E8AFQBMyVNANw8A/iJG6zmX/wDwTwAVAEzJU0A3DwD+Jw8A8Cf/APAslYzJYzMwFw8A/iIW6zmH/wDwHwAQHMlDFw8A/iyQGAWACU+EFvJBAjXwN/AnCAQlhtbfAQgAAT7AAAfPhBbyRbgRFNMiTHBfL0oIAADDGACASAbHAEJTbPPARgdAAU8BKAABxx8BKABCsgB2zzJHgAWghCv+Q9XWMsfyz8BDbdDG2eeAnAhAE23ejBOC52Hq6WVz2PQnYc6yVCjbNBOE7rGpaVsj5ZkWnXlv74sRzABFu1E0NQB+GLbPGwSIgAO+kABAdMfWQ==';
+async function SampleTactContract_init(c: bigint) {
+    const __init = 'te6ccgEBBwEAMQABFP8A9KQT9LzyyAsBAgFiAgMCAs4EBQAJoUrd4AUAAUgBD0AcjMAds8yYBgAGAcsf';
+    const __code = 'te6ccgECIwEAAj4AART/APSkE/S88sgLAQIBYgIDAgLLBAUCAWofIAIBIAYHAgFIFRYCAdQICQIBWBARBJM7ftwIddJwh+VMCDXCx/eAtDTAwFxsMABkX+RcOIB+kAiUGZvBPhhApFb4CCCEIfUOsK6j4sw2zwB2zwx8BLbPOAgghCUapi2uoCEKDgsACwgbvLQgIAAg0x8BghCH1DrCuvLggdMfAQQgj4sw2zwB2zwx8BTbPODAACEMDg0AINMfAYIQlGqYtrry4IHTPwECcI8w+QGC8MT41yMS7f3vW3vseDO9uxYtFRG9eKkSrtDyY3r2VXKuuo8I2zzwE9s82zHgkTDi8sCCIQ4BFsj4QgHMAds8ye1UDwAGAcsfABVZR/AcoA4HABygCAIBIBITAfcyHEBygFQB/ANcAHKAlAFzxZQA/oCcAHKaCNusyVus7GOPX/wDchw8A1w8A0kbrOZf/ANBPABUATMlTQDcPAN4iRus5l/8A0E8AFQBMyVNANw8A3icPANAn/wDQLJWMyWMzMBcPAN4iFus5h/8A0B8AEBzJQxcPAN4skBgFAAlPhBbyQQI18DfwJwgEJYbW3wDoAAE+wACASAXGAEJ1tnngHwdAgEgGRoCASAbHAADKCAAASAABTwEIAAHHHwEIAEKyAHbPMkeABaCEK/5D1dYyx/LPwENt0MbZ54CMCEATbd6ME4LnYerpZXPY9CdhzrJUKNs0E4TusalpWyPlmRadeW/vixHMAEU7UTQ1AH4Yts8MSIABtMfAQ==';
     const __system = 'te6cckEBAQEAAwAAAUD20kA0';
     let systemCell = Cell.fromBase64(__system);
     let builder = new TupleBuilder();
     builder.writeCell(systemCell);
-    builder.writeAddress(owner);
+    builder.writeNumber(c);
     let __stack = builder.build();
     let codeCell = Cell.fromBoc(Buffer.from(__code, 'base64'))[0];
     let initCell = Cell.fromBoc(Buffer.from(__init, 'base64'))[0];
@@ -340,17 +340,16 @@ const SampleTactContract_errors: { [key: number]: { message: string } } = {
     132: { message: `Access denied` },
     133: { message: `Contract stopped` },
     134: { message: `Invalid argument` },
-    4429: { message: `Invalid sender` },
 }
 
 export class SampleTactContract implements Contract {
     
-    static async init(owner: Address) {
-        return await SampleTactContract_init(owner);
+    static async init(c: bigint) {
+        return await SampleTactContract_init(c);
     }
     
-    static async fromInit(owner: Address) {
-        const init = await SampleTactContract_init(owner);
+    static async fromInit(c: bigint) {
+        const init = await SampleTactContract_init(c);
         const address = contractAddress(0, init);
         return new SampleTactContract(address, init);
     }

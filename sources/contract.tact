@@ -6,20 +6,13 @@ message Add {
 
 contract SampleTactContract with Deployable {
 
-    owner: Address;
     counter: Int as uint32;
 
-    init(owner: Address) {
-        self.owner = owner;
-        self.counter = 0;
+    init(c: Int) {
+        self.counter = c;
     }
 
-    fun add(v: Int) {
-        
-        // Check sender
-        let ctx: Context = context();
-        require(ctx.sender == self.owner, "Invalid sender");
-        
+    fun add(v: Int) {    
         // Update counter
         self.counter = (self.counter + v);
     }

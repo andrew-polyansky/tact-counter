@@ -1,17 +1,16 @@
 import { beginCell, contractAddress, toNano } from "ton";
-import { testAddress } from "ton-emulator";
 import { SampleTactContract, storeAdd } from "./output/sample_SampleTactContract";
 import { deploy } from "./utils/deploy";
 import { printAddress, printDeploy, printHeader } from "./utils/print";
+import env from './var/env'
 
 (async () => {
 
     // Parameters
-    let owner = testAddress('some-owner'); // Replace owner with your address
     let packed = beginCell().store(storeAdd({ $$type: 'Add', amount: 10n })).endCell(); // Replace if you want another message used
-    let init = await SampleTactContract.init(owner);
+    let init = await SampleTactContract.init(34n);
     let address = contractAddress(0, init);
-    let deployAmount = toNano(10);
+    let deployAmount = toNano('0.05');
     let testnet = true;
 
     // Print basics
@@ -20,5 +19,7 @@ import { printAddress, printDeploy, printHeader } from "./utils/print";
     // printDeploy(init, deployAmount, packed, testnet);
     
     // Do deploy
-    await deploy(init, deployAmount, packed, testnet)
+    await deploy(init, deployAmount, packed, testnet);
+
+    env.deployed.contractAddress = address.toString();
 })();
